@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
               })
                   .toList(),
               onChanged: (newValue) {
-                _taskController.updateCategory(newValue!); // Added category update
+                _taskController.updateCategory(newValue!);
               },
             ),
           ),
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }).toList(),
               onChanged: (newValue) {
-                _taskController.updatePriority(newValue!); // Added priority update
+                _taskController.updatePriority(newValue!);
               },
             ),
           ),

@@ -13,8 +13,8 @@ class TaskController extends GetxController {
   var taskList = <Task>[].obs;
   var filteredTaskList = <Task>[].obs;
   var isSearching = false.obs;
-  var selectedCategory = 'All'.obs; // متغير لتخزين الفئة المحددة
-  var selectedPriority = 'All'.obs; // متغير لتخزين الأولوية المحددة
+  var selectedCategory = 'All'.obs;
+  var selectedPriority = 'All'.obs;
 
   Future<int> addTask({Task? task}) async {
     return await DBHelper.instance.insert(task!);
@@ -23,66 +23,66 @@ class TaskController extends GetxController {
   void getTasks() async {
     List<Map<String, dynamic>> tasks = await DBHelper.instance.query();
     taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
-    filterTasks(); // تصفية المهام بعد استرجاعها من قاعدة البيانات
+    filterTasks();
   }
 
   Future<void> delete(Task task) async {
     await DBHelper.instance.delete(task);
-    getTasks(); // إعادة تحميل المهام بعد الحذف
+    getTasks();
   }
 
   Future<void> markTaskCompleted(int id) async {
     await DBHelper.instance.updateCompleted(id);
-    getTasks(); // إعادة تحميل المهام بعد التحديث
+    getTasks();
   }
 
   Future<void> updateTaskInfo(Task task) async {
     await DBHelper.instance.updateTask(task);
-    getTasks(); // إعادة تحميل المهام بعد التحديث
+    getTasks();
   }
 
   void filterTasks() {
     List<Task> tempTasks = taskList;
 
-    // تصفية المهام بناءً على الفئة المختارة
+
     if (selectedCategory.value != 'All') {
       tempTasks = tempTasks
           .where((task) => task.category == selectedCategory.value)
           .toList();
     }
 
-    // تصفية المهام بناءً على الأولوية المختارة
+
     if (selectedPriority.value != 'All') {
       tempTasks = tempTasks
           .where((task) => task.priority == selectedPriority.value)
           .toList();
     }
 
-    filteredTaskList.assignAll(tempTasks); // تحديث قائمة المهام المصفاة
+    filteredTaskList.assignAll(tempTasks);
   }
 
   void searchTasks(String query) {
     if (query.isEmpty) {
       isSearching.value = false;
-      filterTasks(); // إذا كانت خانة البحث فارغة، إعادة تصفية المهام
+      filterTasks();
     } else {
       isSearching.value = true;
       List<Task> tempTasks = taskList.where((task) {
-        // البحث في عنوان ووصف المهمة
+
         return task.title!.toLowerCase().contains(query.toLowerCase()) ||
             task.description!.toLowerCase().contains(query.toLowerCase());
       }).toList();
-      filteredTaskList.assignAll(tempTasks); // تحديث قائمة المهام المصفاة بناءً على البحث
+      filteredTaskList.assignAll(tempTasks);
     }
   }
 
   void updateCategory(String category) {
-    selectedCategory.value = category; // تحديث الفئة المختارة
-    filterTasks(); // تصفية المهام بناءً على الفئة المختارة
+    selectedCategory.value = category;
+    filterTasks();
   }
 
   void updatePriority(String priority) {
-    selectedPriority.value = priority; // تحديث الأولوية المختارة
-    filterTasks(); // تصفية المهام بناءً على الأولوية المختارة
+    selectedPriority.value = priority;
+    filterTasks();
   }
 }

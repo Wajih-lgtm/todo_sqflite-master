@@ -5,7 +5,7 @@ class Task {
   String? priority;
   String? dueDate;
   int? isCompleted;
-  String? category; // تمت إضافة خاصية الفئة لتحديد نوع المهمة
+  String? category;
   String? createdAt;
 
   Task({
@@ -15,7 +15,7 @@ class Task {
     this.priority,
     this.dueDate,
     this.isCompleted,
-    this.category, // إضافة الفئة هنا
+    this.category,
     this.createdAt,
   });
 
@@ -26,7 +26,7 @@ class Task {
     priority = json['priority'];
     dueDate = json['dueDate'];
     isCompleted = json['isCompleted'];
-    category = json['category']; // تعيين قيمة الفئة من JSON
+    category = json['category'];
     createdAt = json['createdAt'];
   }
 
@@ -38,7 +38,7 @@ class Task {
     data['priority'] = priority;
     data['dueDate'] = dueDate;
     data['isCompleted'] = isCompleted;
-    data['category'] = category; // تضمين الفئة في البيانات عند تحويلها إلى JSON
+    data['category'] = category;
     data['createdAt'] = createdAt;
     return data;
   }
